@@ -1,0 +1,2955 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)http://android-er.blogspot.com/2012/07/implement-gallery-like.html -->
+<html class="v2" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="width=1100" name="viewport">
+
+<script src="./Android-er  Implement Gallery-like HorizontalScrollView_files/cb=gapi.loaded_4" async=""></script><script src="./Android-er  Implement Gallery-like HorizontalScrollView_files/cb=gapi.loaded_3" async=""></script><script src="./Android-er  Implement Gallery-like HorizontalScrollView_files/cb=gapi.loaded_2" async=""></script><script id="twitter-wjs" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/widgets.js"></script><script src="./Android-er  Implement Gallery-like HorizontalScrollView_files/cb=gapi.loaded_1" async=""></script><script src="./Android-er  Implement Gallery-like HorizontalScrollView_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/ga.js"></script><script type="text/javascript">(function() { var b=window,f="chrome",g="jstiming",k="tick";(function(){function d(a){this.t={};this.tick=function(a,d,c){var e=void 0!=c?c:(new Date).getTime();this.t[a]=[e,d];if(void 0==c)try{b.console.timeStamp("CSI/"+a)}catch(h){}};this[k]("start",null,a)}var a;b.performance&&(a=b.performance.timing);var n=a?new d(a.responseStart):new d;b.jstiming={Timer:d,load:n};if(a){var c=a.navigationStart,h=a.responseStart;0<c&&h>=c&&(b[g].srt=h-c)}if(a){var e=b[g].load;0<c&&h>=c&&(e[k]("_wtsrt",void 0,c),e[k]("wtsrt_","_wtsrt",h),e[k]("tbsd_","wtsrt_"))}try{a=null,
+b[f]&&b[f].csi&&(a=Math.floor(b[f].csi().pageT),e&&0<c&&(e[k]("_tbnd",void 0,b[f].csi().startE),e[k]("tbnd_","_tbnd",c))),null==a&&b.gtbExternal&&(a=b.gtbExternal.pageT()),null==a&&b.external&&(a=b.external.pageT,e&&0<c&&(e[k]("_tbnd",void 0,b.external.startE),e[k]("tbnd_","_tbnd",c))),a&&(b[g].pt=a)}catch(p){}})();b.tickAboveFold=function(d){var a=0;if(d.offsetParent){do a+=d.offsetTop;while(d=d.offsetParent)}d=a;750>=d&&b[g].load[k]("aft")};var l=!1;function m(){l||(l=!0,b[g].load[k]("firstScrollTime"))}b.addEventListener?b.addEventListener("scroll",m,!1):b.attachEvent("onscroll",m);
+ })();</script>
+<meta content="blogger" name="generator">
+<link href="http://android-er.blogspot.com/favicon.ico" rel="icon" type="image/x-icon">
+<link href="./Android-er  Implement Gallery-like HorizontalScrollView_files/Android-er  Implement Gallery-like HorizontalScrollView.html" rel="canonical">
+<link rel="alternate" type="application/atom+xml" title="Android-er - Atom" href="http://android-er.blogspot.com/feeds/posts/default">
+<link rel="alternate" type="application/rss+xml" title="Android-er - RSS" href="http://android-er.blogspot.com/feeds/posts/default?alt=rss">
+<link rel="service.post" type="application/atom+xml" title="Android-er - Atom" href="http://www.blogger.com/feeds/89878749563391212/posts/default">
+
+<link rel="alternate" type="application/atom+xml" title="Android-er - Atom" href="http://android-er.blogspot.com/feeds/6839374384909706643/comments/default">
+<!--[if IE]><script type="text/javascript" src="https://www.blogger.com/static/v1/jsbin/850967532-ieretrofit.js"></script>
+<![endif]-->
+<link rel="image_src" href="./Android-er  Implement Gallery-like HorizontalScrollView_files/AndroidHorizontalScrollViewGallery(1).png">
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } try { document.execCommand('BackgroundImageCache', false, true); } catch(e) {} })(); </script> <![endif]-->
+<title>Android-er: Implement Gallery-like HorizontalScrollView</title>
+<link type="text/css" rel="stylesheet" href="./Android-er  Implement Gallery-like HorizontalScrollView_files/2356033831-widget_css_2_bundle.css">
+<link type="text/css" rel="stylesheet" href="./Android-er  Implement Gallery-like HorizontalScrollView_files/authorization.css">
+<style id="page-skin-1" type="text/css"><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Watermark
+Designer: Josh Peterson
+URL:      www.noaesthetic.com
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="keycolor" description="Main Color" type="color" default="#c0a154"/>
+<Group description="Page Text" selector="body">
+<Variable name="body.font" description="Font" type="font"
+default="normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="body.text.color" description="Text Color" type="color" default="#333333"/>
+</Group>
+<Group description="Backgrounds" selector=".main-inner">
+<Variable name="body.background.color" description="Outer Background" type="color" default="#c0a154"/>
+<Variable name="footer.background.color" description="Footer Background" type="color" default="transparent"/>
+</Group>
+<Group description="Links" selector=".main-inner">
+<Variable name="link.color" description="Link Color" type="color" default="#cc3300"/>
+<Variable name="link.visited.color" description="Visited Color" type="color" default="#993322"/>
+<Variable name="link.hover.color" description="Hover Color" type="color" default="#ff3300"/>
+</Group>
+<Group description="Blog Title" selector=".header h1">
+<Variable name="header.font" description="Title Font" type="font"
+default="normal normal 60px Georgia, Utopia, 'Palatino Linotype', Palatino, serif"/>
+<Variable name="header.text.color" description="Title Color" type="color" default="#ffffff" />
+</Group>
+<Group description="Blog Description" selector=".header .description">
+<Variable name="description.text.color" description="Description Color" type="color"
+default="#997755" />
+</Group>
+<Group description="Tabs Text" selector=".tabs-inner .widget li a">
+<Variable name="tabs.font" description="Font" type="font"
+default="normal normal 20px Georgia, Utopia, 'Palatino Linotype', Palatino, serif"/>
+<Variable name="tabs.text.color" description="Text Color" type="color" default="#cc9900"/>
+<Variable name="tabs.selected.text.color" description="Selected Color" type="color" default="#000000"/>
+</Group>
+<Group description="Tabs Background" selector=".tabs-outer .PageList">
+<Variable name="tabs.background.color" description="Background Color" type="color" default="transparent"/>
+<Variable name="tabs.separator.color" description="Separator Color" type="color" default="#a9c054"/>
+</Group>
+<Group description="Date Header" selector="h2.date-header">
+<Variable name="date.font" description="Font" type="font"
+default="normal normal 16px Arial, Tahoma, Helvetica, FreeSans, sans-serif"/>
+<Variable name="date.text.color" description="Text Color" type="color" default="#997755"/>
+</Group>
+<Group description="Post" selector="h3.post-title, .comments h4">
+<Variable name="post.title.font" description="Title Font" type="font"
+default="normal normal 30px Georgia, Utopia, 'Palatino Linotype', Palatino, serif"/>
+<Variable name="post.background.color" description="Background Color" type="color" default="transparent"/>
+<Variable name="post.border.color" description="Border Color" type="color" default="#ccbb99" />
+</Group>
+<Group description="Post Footer" selector=".post-footer">
+<Variable name="post.footer.text.color" description="Text Color" type="color" default="#997755"/>
+</Group>
+<Group description="Gadgets" selector="h2">
+<Variable name="widget.title.font" description="Title Font" type="font"
+default="normal normal 20px Georgia, Utopia, 'Palatino Linotype', Palatino, serif"/>
+<Variable name="widget.title.text.color" description="Title Color" type="color" default="#000000"/>
+<Variable name="widget.alternate.text.color" description="Alternate Color" type="color" default="#777777"/>
+</Group>
+<Group description="Footer" selector=".footer-inner">
+<Variable name="footer.text.color" description="Text Color" type="color" default="#333333"/>
+<Variable name="footer.widget.title.text.color" description="Gadget Title Color" type="color" default="#c0a154"/>
+</Group>
+<Group description="Footer Links" selector=".footer-inner">
+<Variable name="footer.link.color" description="Link Color" type="color" default="#cc9900"/>
+<Variable name="footer.link.visited.color" description="Visited Color" type="color" default="#996e22"/>
+<Variable name="footer.link.hover.color" description="Hover Color" type="color" default="#ffb200"/>
+</Group>
+<Variable name="body.background" description="Body Background" type="background"
+color="#a9c054" default="$(color) url(//www.blogblog.com/1kt/watermark/body_background_birds.png) repeat scroll top left"/>
+<Variable name="body.background.overlay" description="Overlay Background" type="background" color="#a9c054"
+default="transparent url(//www.blogblog.com/1kt/watermark/body_overlay_birds.png) no-repeat scroll top right"/>
+<Variable name="body.background.overlay.height" description="Overlay Background Height" type="length" default="121px"/>
+<Variable name="tabs.background.inner" description="Tabs Background Inner" type="url" default="none"/>
+<Variable name="tabs.background.outer" description="Tabs Background Outer" type="url" default="none"/>
+<Variable name="tabs.border.size" description="Tabs Border Size" type="length" default="0"/>
+<Variable name="tabs.shadow.spread" description="Tabs Shadow Spread" type="length" default="0"/>
+<Variable name="main.padding.top" description="Main Padding Top" type="length" default="30px"/>
+<Variable name="main.cap.height" description="Main Cap Height" type="length" default="0"/>
+<Variable name="main.cap.image" description="Main Cap Image" type="url" default="none"/>
+<Variable name="main.cap.overlay" description="Main Cap Overlay" type="url" default="none"/>
+<Variable name="main.background" description="Main Background" type="background"
+default="transparent none no-repeat scroll top left"/>
+<Variable name="post.background.url" description="Post Background URL" type="url"
+default="url(//www.blogblog.com/1kt/watermark/post_background_birds.png)"/>
+<Variable name="post.border.size" description="Post Border Size" type="length" default="1px"/>
+<Variable name="post.border.style" description="Post Border Style" type="string" default="dotted"/>
+<Variable name="post.shadow.spread" description="Post Shadow Spread" type="length" default="0"/>
+<Variable name="footer.background" description="Footer Background" type="background"
+color="#331900" default="$(color) url(//www.blogblog.com/1kt/watermark/body_background_navigator.png) repeat scroll top left"/>
+<Variable name="mobile.background.overlay" description="Mobile Background Overlay" type="string"
+default="transparent none repeat scroll top left"/>
+<Variable name="startSide" description="Side where text starts in blog language" type="automatic" default="left"/>
+<Variable name="endSide" description="Side where text ends in blog language" type="automatic" default="right"/>
+*/
+/* Use this with templates/1ktemplate-*.html */
+/* Content
+----------------------------------------------- */
+body {
+font: normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #333333;
+background: #a9c054 url(//www.blogblog.com/1kt/watermark/body_background_birds.png) repeat scroll top left;
+}
+html body .content-outer {
+min-width: 0;
+max-width: 100%;
+width: 100%;
+}
+.content-outer {
+font-size: 92%;
+}
+a:link {
+text-decoration:none;
+color: #cc9900;
+}
+a:visited {
+text-decoration:none;
+color: #996e22;
+}
+a:hover {
+text-decoration:underline;
+color: #ffb200;
+}
+.body-fauxcolumns .cap-top {
+margin-top: 30px;
+background: #a9c054 none no-repeat scroll center center;
+height: 121px;
+}
+.content-inner {
+padding: 0;
+}
+/* Header
+----------------------------------------------- */
+.header-inner .Header .titlewrapper,
+.header-inner .Header .descriptionwrapper {
+padding-left: 20px;
+padding-right: 20px;
+}
+.Header h1 {
+font: normal normal 36px Impact, sans-serif;
+color: #ffffff;
+text-shadow: 2px 2px rgba(0, 0, 0, .1);
+}
+.Header h1 a {
+color: #ffffff;
+}
+.Header .description {
+font-size: 140%;
+color: #eeeeee;
+}
+/* Tabs
+----------------------------------------------- */
+.tabs-inner .section {
+margin: 0 20px;
+}
+.tabs-inner .PageList, .tabs-inner .LinkList, .tabs-inner .Labels {
+margin-left: -11px;
+margin-right: -11px;
+background-color: transparent;
+border-top: 0 solid #ffffff;
+border-bottom: 0 solid #ffffff;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .3);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .3);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .3);
+box-shadow: 0 0 0 rgba(0, 0, 0, .3);
+}
+.tabs-inner .PageList .widget-content,
+.tabs-inner .LinkList .widget-content,
+.tabs-inner .Labels .widget-content {
+margin: -3px -11px;
+background: transparent none  no-repeat scroll right;
+}
+.tabs-inner .widget ul {
+padding: 2px 25px;
+max-height: 34px;
+background: transparent none no-repeat scroll left;
+}
+.tabs-inner .widget li {
+border: none;
+}
+.tabs-inner .widget li a {
+display: inline-block;
+padding: .25em 1em;
+font: normal normal 20px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+color: #cc3300;
+border-right: 1px solid #c0a154;
+}
+.tabs-inner .widget li:first-child a {
+border-left: 1px solid #c0a154;
+}
+.tabs-inner .widget li.selected a, .tabs-inner .widget li a:hover {
+color: #000000;
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+font: normal normal 20px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #c0a154;
+margin: 0 0 .5em;
+}
+h2.date-header {
+font: normal normal 16px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #999955;
+}
+/* Main
+----------------------------------------------- */
+.main-inner .column-center-inner,
+.main-inner .column-left-inner,
+.main-inner .column-right-inner {
+padding: 0 5px;
+}
+.main-outer {
+margin-top: 0;
+background: transparent none no-repeat scroll top left;
+}
+.main-inner {
+padding-top: 30px;
+}
+.main-cap-top {
+position: relative;
+}
+.main-cap-top .cap-right {
+position: absolute;
+height: 0;
+width: 100%;
+bottom: 0;
+background: transparent none repeat-x scroll bottom center;
+}
+.main-cap-top .cap-left {
+position: absolute;
+height: 245px;
+width: 280px;
+right: 0;
+bottom: 0;
+background: transparent none no-repeat scroll bottom left;
+}
+/* Posts
+----------------------------------------------- */
+.post-outer {
+padding: 15px 20px;
+margin: 0 0 25px;
+background: #ffffff url(//www.blogblog.com/1kt/watermark/post_background_birds.png) repeat scroll top left;
+_background-image: none;
+border: dotted 1px #000000;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+}
+h3.post-title {
+font: normal normal 30px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+margin: 0;
+}
+.comments h4 {
+font: normal normal 30px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+margin: 1em 0 0;
+}
+.post-body {
+font-size: 105%;
+line-height: 1.5;
+position: relative;
+}
+.post-header {
+margin: 0 0 1em;
+color: #999955;
+}
+.post-footer {
+margin: 10px 0 0;
+padding: 10px 0 0;
+color: #999955;
+border-top: dashed 1px #ffffff;
+}
+#blog-pager {
+font-size: 140%
+}
+#comments .comment-author {
+padding-top: 1.5em;
+border-top: dashed 1px #ffffff;
+background-position: 0 1.5em;
+}
+#comments .comment-author:first-child {
+padding-top: 0;
+border-top: none;
+}
+.avatar-image-container {
+margin: .2em 0 0;
+}
+/* Comments
+----------------------------------------------- */
+.comments .comments-content .icon.blog-author {
+background-repeat: no-repeat;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sLFwMeCjjhcOMAAAD+SURBVDjLtZSvTgNBEIe/WRRnm3U8RC1neQdsm1zSBIU9VVF1FkUguQQsD9ITmD7ECZIJSE4OZo9stoVjC/zc7ky+zH9hXwVwDpTAWWLrgS3QAe8AZgaAJI5zYAmc8r0G4AHYHQKVwII8PZrZFsBFkeRCABYiMh9BRUhnSkPTNCtVXYXURi1FpBDgArj8QU1eVXUzfnjv7yP7kwu1mYrkWlU33vs1QNu2qU8pwN0UpKoqokjWwCztrMuBhEhmh8bD5UDqur75asbcX0BGUB9/HAMB+r32hznJgXy2v0sGLBcyAJ1EK3LFcbo1s91JeLwAbwGYu7TP/3ZGfnXYPgAVNngtqatUNgAAAABJRU5ErkJggg==);
+}
+.comments .comments-content .loadmore a {
+border-top: 1px solid #ffffff;
+border-bottom: 1px solid #ffffff;
+}
+.comments .continue {
+border-top: 2px solid #ffffff;
+}
+/* Widgets
+----------------------------------------------- */
+.widget ul, .widget #ArchiveList ul.flat {
+padding: 0;
+list-style: none;
+}
+.widget ul li, .widget #ArchiveList ul.flat li {
+padding: .35em 0;
+text-indent: 0;
+border-top: dashed 1px #ffffff;
+}
+.widget ul li:first-child, .widget #ArchiveList ul.flat li:first-child {
+border-top: none;
+}
+.widget .post-body ul {
+list-style: disc;
+}
+.widget .post-body ul li {
+border: none;
+}
+.widget .zippy {
+color: #ffffff;
+}
+.post-body img, .post-body .tr-caption-container, .Profile img, .Image img,
+.BlogList .item-thumbnail img {
+padding: 5px;
+background: #fff;
+-moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
+-webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
+-goog-ms-box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
+box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
+}
+.post-body img, .post-body .tr-caption-container {
+padding: 8px;
+}
+.post-body .tr-caption-container {
+color: #333333;
+}
+.post-body .tr-caption-container img {
+padding: 0;
+background: transparent;
+border: none;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+box-shadow: 0 0 0 rgba(0, 0, 0, .1);
+}
+/* Footer
+----------------------------------------------- */
+.footer-outer {
+color:#c3cc99;
+background: #331900 url(//www.blogblog.com/1kt/watermark/body_background_navigator.png) repeat scroll top left;
+}
+.footer-outer a {
+color: #ffcc55;
+}
+.footer-outer a:visited {
+color: #dda932;
+}
+.footer-outer a:hover {
+color: #ffdd77;
+}
+.footer-outer .widget h2 {
+color: #e5eebb;
+}
+/* Mobile
+----------------------------------------------- */
+body.mobile  {
+background-size: 100% auto;
+}
+.mobile .body-fauxcolumn-outer {
+background: transparent none repeat scroll top left;
+}
+html .mobile .mobile-date-outer {
+border-bottom: none;
+background: #ffffff url(//www.blogblog.com/1kt/watermark/post_background_birds.png) repeat scroll top left;
+_background-image: none;
+margin-bottom: 10px;
+}
+.mobile .main-inner .date-outer {
+padding: 0;
+}
+.mobile .main-inner .date-header {
+margin: 10px;
+}
+.mobile .main-cap-top {
+z-index: -1;
+}
+.mobile .content-outer {
+font-size: 100%;
+}
+.mobile .post-outer {
+padding: 10px;
+}
+.mobile .main-cap-top .cap-left {
+background: transparent none no-repeat scroll bottom left;
+}
+.mobile .body-fauxcolumns .cap-top {
+margin: 0;
+}
+.mobile-link-button {
+background: #ffffff url(//www.blogblog.com/1kt/watermark/post_background_birds.png) repeat scroll top left;
+}
+.mobile-link-button a:link, .mobile-link-button a:visited {
+color: #cc9900;
+}
+.mobile-index-date .date-header {
+color: #999955;
+}
+.mobile-index-contents {
+color: #333333;
+}
+.mobile .tabs-inner .section {
+margin: 0;
+}
+.mobile .tabs-inner .PageList {
+margin-left: 0;
+margin-right: 0;
+}
+.mobile .tabs-inner .PageList .widget-content {
+margin: 0;
+color: #000000;
+background: #ffffff url(//www.blogblog.com/1kt/watermark/post_background_birds.png) repeat scroll top left;
+}
+.mobile .tabs-inner .PageList .widget-content .pagelist-arrow {
+border-left: 1px solid #c0a154;
+}
+
+--></style>
+<style id="template-skin-1" type="text/css"><!--
+body {
+min-width: 1024px;
+}
+.content-outer, .content-fauxcolumn-outer, .region-inner {
+min-width: 1024px;
+max-width: 1024px;
+_width: 1024px;
+}
+.main-inner .columns {
+padding-left: 0;
+padding-right: 340px;
+}
+.main-inner .fauxcolumn-center-outer {
+left: 0;
+right: 340px;
+/* IE6 does not respect left and right together */
+_width: expression(this.parentNode.offsetWidth -
+parseInt("0") -
+parseInt("340px") + 'px');
+}
+.main-inner .fauxcolumn-left-outer {
+width: 0;
+}
+.main-inner .fauxcolumn-right-outer {
+width: 340px;
+}
+.main-inner .column-left-outer {
+width: 0;
+right: 100%;
+margin-left: -0;
+}
+.main-inner .column-right-outer {
+width: 340px;
+margin-right: -340px;
+}
+#layout {
+min-width: 0;
+}
+#layout .content-outer {
+min-width: 0;
+width: 800px;
+}
+#layout .region-inner {
+min-width: 0;
+width: auto;
+}
+--></style>
+<script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-45116094-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = (document.location.protocol == 'https:' ?
+                  'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script><style type="text/css"></style>
+<script type="text/javascript">var a="indexOf",b="&m=1",e="(^|&)m=",f="?",g="?m=1";function h(){var c=window.location.href,d=c.split(f);switch(d.length){case 1:return c+g;case 2:return 0<=d[1].search(e)?null:c+b;default:return null}}var k=navigator.userAgent;if(-1!=k[a]("Mobile")&&-1!=k[a]("WebKit")&&-1==k[a]("iPad")||-1!=k[a]("Opera Mini")||-1!=k[a]("IEMobile")){var l=h();l&&window.location.replace(l)};
+</script><script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('headEnd');
+</script><script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/google_top_exp.js"></script><style>.gc-bubbleDefault{background-color:transparent !important;text-align:left;padding:0 !important;margin:0 !important;border:0 !important;table-layout:auto !important}.gc-reset{background-color:transparent !important;border:0 !important;padding:0 !important;margin:0 !important;text-align:left}.pls-bubbleTop{border-bottom:1px solid #ccc !important}.pls-topTail,.pls-vertShimLeft,.pls-contentLeft{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/border_3.gif) !important}.pls-topTail{background-repeat:repeat-x !important;background-position:bottom !important}.pls-vertShim{background-color:#fff !important;text-align:right}.tbl-grey .pls-vertShim{background-color:#f5f5f5 !important}.pls-vertShimLeft{background-repeat:repeat-y !important;background-position:right !important;height:4px}.pls-vertShimRight{height:4px}.pls-confirm-container .pls-vertShim{background-color:#fff3c2 !important}.pls-contentWrap{background-color:#fff !important;position:relative !important;vertical-align:top}.pls-contentLeft{background-repeat:repeat-y;background-position:right;vertical-align:top}.pls-dropRight{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropR_3.png) !important;background-repeat:repeat-y !important;vertical-align:top}.pls-vert,.pls-tailleft,.pls-dropTR .pls-dropBR,.pls-dropBL,.pls-vert img{vertical-align:top}.pls-dropBottom{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropB_3.png) !important;background-repeat:repeat-x !important;width:100%;vertical-align:top}.pls-topLeft{background:inherit !important;text-align:right;vertical-align:bottom}.pls-topRight{background:inherit !important;text-align:left;vertical-align:bottom}.pls-bottomLeft{background:inherit !important;text-align:right}.pls-bottomRight{background:inherit !important;text-align:left;vertical-align:top}.pls-tailtop,.pls-tailright,.pls-tailbottom,.pls-tailleft{display:none;position:relative}.pls-tailbottom,.pls-tailtop,.pls-tailright,.pls-tailleft,.pls-dropTR,.pls-dropBR,.pls-dropBL{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite_3.png) !important;background-repeat:no-repeat}.tbl-grey .pls-tailbottom,.tbl-grey .pls-tailtop,.tbl-grey .pls-tailright,.tbl-grey .pls-tailleft,.tbl-grey .pls-dropTR,.tbl-grey .pls-dropBR,.tbl-grey .pls-dropBL{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite-grey.png) !important}.pls-tailbottom{background-position:-23px 0}.pls-confirm-container .pls-tailbottom{background-position:-23px -10px}.pls-tailtop{background-position:-19px -20px}.pls-tailright{background-position:0 0}.pls-tailleft{background-position:-10px 0}.pls-tailtop{vertical-align:top}.gc-bubbleDefault td{line-height:0;font-size:0}.pls-topLeft img,.pls-topRight img,.pls-tailbottom{vertical-align:bottom}.pls-bottomLeft img,.bubbleDropTR,.pls-dropBottomL img,.pls-dropBottom img,.pls-dropBottomR img,.pls-bottomLeft{vertical-align:top}.pls-dropTR{background-position:0 -22px}.pls-dropBR{background-position:0 -27px}.pls-dropBL{background-position:0 -16px}.pls-spacertop,.pls-spacerright,.pls-spacerbottom,.pls-spacerleft{position:static !important}.pls-spinner{bottom:0;position:absolute;left:0;margin:auto;right:0;top:0}</style></head>
+<body class="" data-twttr-rendered="true">
+<div class="navbar section" id="navbar"><div class="widget Navbar" id="Navbar1"><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<div id="navbar-iframe-container"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="" tabindex="0" vspace="0" width="100%" id="navbar-iframe" name="navbar-iframe" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/navbar.html"></iframe></div>
+<script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/plusone.js" gapi_processed="true"></script>
+<script type="text/javascript">
+        gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+          if (gapi.iframes && gapi.iframes.getContext) {
+            gapi.iframes.getContext().openChild({
+                url: '//www.blogger.com/navbar.g?targetBlogID\7589878749563391212\46blogName\75Android-er\46publishMode\75PUBLISH_MODE_BLOGSPOT\46navbarType\75LIGHT\46layoutType\75LAYOUTS\46searchRoot\75http://android-er.blogspot.com/search\46blogLocale\75en\46v\0752\46homepageUrl\75http://android-er.blogspot.com/\46targetPostID\0756839374384909706643\46blogPostOrPageUrl\75http://android-er.blogspot.com/2012/07/implement-gallery-like.html\46blogFollowUrl\75https://plus.google.com/102969667192015169220\46vt\7580910685761720640',
+                where: document.getElementById("navbar-iframe-container"),
+                id: "navbar-iframe"
+            });
+          }
+        });
+      </script><script type="text/javascript">
+(function() {
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
+if (head) {
+head.appendChild(script);
+}})();
+</script>
+</div></div>
+<div class="body-fauxcolumns">
+<div class="fauxcolumn-outer body-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content">
+<div class="content-fauxcolumns">
+<div class="fauxcolumn-outer content-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content-outer">
+<div class="content-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left content-fauxborder-left">
+<div class="fauxborder-right content-fauxborder-right"></div>
+<div class="content-inner">
+<header>
+<div class="header-outer">
+<div class="header-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left header-fauxborder-left">
+<div class="fauxborder-right header-fauxborder-right"></div>
+<div class="region-inner header-inner">
+<div class="header section" id="header"><div class="widget Header" id="Header1">
+<div id="header-inner">
+<div class="titlewrapper">
+<h1 class="title">
+<a href="http://android-er.blogspot.com/">Android-er</a>
+</h1>
+</div>
+<div class="descriptionwrapper">
+<p class="description"><span>For Android development, from beginner to beginner.</span></p>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="header-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</header>
+<div class="tabs-outer">
+<div class="tabs-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left tabs-fauxborder-left">
+<div class="fauxborder-right tabs-fauxborder-right"></div>
+<div class="region-inner tabs-inner">
+<div class="tabs section" id="crosscol"></div>
+<div class="tabs section" id="crosscol-overflow"></div>
+</div>
+</div>
+<div class="tabs-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="main-outer">
+<div class="main-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left main-fauxborder-left">
+<div class="fauxborder-right main-fauxborder-right"></div>
+<div class="region-inner main-inner">
+<div class="columns fauxcolumns">
+<div class="fauxcolumn-outer fauxcolumn-center-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-left-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-right-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<!-- corrects IE6 width calculation -->
+<div class="columns-inner">
+<div class="column-center-outer">
+<div class="column-center-inner">
+<div class="main section" id="main"><div class="widget Blog" id="Blog1">
+<div class="blog-posts hfeed">
+<!-- google_ad_section_start(name=default) -->
+
+          <div class="date-outer">
+        
+<h2 class="date-header"><span>Friday, July 20, 2012</span></h2>
+
+          <div class="date-posts">
+        
+<div class="post-outer">
+<div class="post hentry" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="http://3.bp.blogspot.com/-eI6AcyRZHwg/UAmzViQ-siI/AAAAAAAAD50/W3R-iib5UiY/s400/AndroidHorizontalScrollViewGallery.png" itemprop="image_url">
+<meta content="89878749563391212" itemprop="blogId">
+<meta content="6839374384909706643" itemprop="postId">
+<a name="6839374384909706643"></a>
+<h3 class="post-title entry-title" itemprop="name">
+Implement Gallery-like HorizontalScrollView
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-6839374384909706643" itemprop="description articleBody">
+As mentioned in the post "<a href="http://android-er.blogspot.com/2012/07/implement-android-gallery-widget.html">Implement Android Gallery widget</a>" - android.widget.Gallery is no longer supported. Other horizontally scrolling widgets include HorizontalScrollView and ViewPager from the support library.<br>
+<br>
+It's a example to implement Gallery-like view using <a href="http://developer.android.com/reference/android/widget/HorizontalScrollView.html">HorizontalScrollView</a>. Please note that in this example, the bitmaps in HorizontalScrollView will not be removed even not in screen. So if too much bitmaps loaded, error of java.lang.OutOfMemoryError will be thrown!<br>
+<br>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://3.bp.blogspot.com/-eI6AcyRZHwg/UAmzViQ-siI/AAAAAAAAD50/W3R-iib5UiY/s1600/AndroidHorizontalScrollViewGallery.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img alt="Gallery-like HorizontalScrollView" border="0" height="225" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/AndroidHorizontalScrollViewGallery.png" title="Gallery-like HorizontalScrollView" width="400"></a></div>
+<br>
+<br>
+Add HorizontalScrollView in layout:<br>
+<pre style="border: 1px solid black;"><code><span style="color: black;">&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical"&gt;
+
+    &lt;HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" &gt;
+        &lt;LinearLayout
+            android:id="@+id/mygallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            /&gt;
+    &lt;/HorizontalScrollView&gt;
+
+&lt;/LinearLayout&gt;
+</span></code></pre>
+<br>
+<br>
+Main Java code:<br>
+<pre style="border: 1px solid black;"><code><span style="color: black;">package com.example.androidhorizontalscrollviewgallery;
+
+import java.io.File;
+
+import android.os.Bundle;
+import android.os.Environment;
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+
+ LinearLayout myGallery;
+ 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        myGallery = (LinearLayout)findViewById(R.id.mygallery);
+        
+        String ExternalStorageDirectoryPath = Environment
+          .getExternalStorageDirectory()
+          .getAbsolutePath();
+        
+        String targetPath = ExternalStorageDirectoryPath + "/test/";
+        
+        Toast.makeText(getApplicationContext(), targetPath, Toast.LENGTH_LONG).show();
+        File targetDirector = new File(targetPath);
+                 
+        File[] files = targetDirector.listFiles();
+        for (File file : files){
+         myGallery.addView(insertPhoto(file.getAbsolutePath()));
+        }    
+    }
+
+    View insertPhoto(String path){
+     Bitmap bm = decodeSampledBitmapFromUri(path, 220, 220);
+     
+     LinearLayout layout = new LinearLayout(getApplicationContext());
+     layout.setLayoutParams(new LayoutParams(250, 250));
+     layout.setGravity(Gravity.CENTER);
+     
+     ImageView imageView = new ImageView(getApplicationContext());
+     imageView.setLayoutParams(new LayoutParams(220, 220));
+     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+     imageView.setImageBitmap(bm);
+     
+     layout.addView(imageView);
+     return layout;
+    }
+    
+    public Bitmap decodeSampledBitmapFromUri(String path, int reqWidth, int reqHeight) {
+     Bitmap bm = null;
+     
+     // First decode with inJustDecodeBounds=true to check dimensions
+     final BitmapFactory.Options options = new BitmapFactory.Options();
+     options.inJustDecodeBounds = true;
+     BitmapFactory.decodeFile(path, options);
+     
+     // Calculate inSampleSize
+     options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+     
+     // Decode bitmap with inSampleSize set
+     options.inJustDecodeBounds = false;
+     bm = BitmapFactory.decodeFile(path, options); 
+     
+     return bm;  
+    }
+    
+    public int calculateInSampleSize(
+      
+     BitmapFactory.Options options, int reqWidth, int reqHeight) {
+     // Raw height and width of image
+     final int height = options.outHeight;
+     final int width = options.outWidth;
+     int inSampleSize = 1;
+        
+     if (height &gt; reqHeight || width &gt; reqWidth) {
+      if (width &gt; height) {
+       inSampleSize = Math.round((float)height / (float)reqHeight);   
+      } else {
+       inSampleSize = Math.round((float)width / (float)reqWidth);   
+      }   
+     }
+     
+     return inSampleSize;   
+    }
+    
+}
+</span></code></pre>
+<br>
+<br>
+<a href="http://adf.ly/1677922/sites.google.com/site/androidersite/download/AndroidHorizontalScrollViewGallery_120721a.zip?attredirects=0&d=1"><img alt="" border="0" id="BLOGGER_PHOTO_ID_5360544424610981522" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icons_download.gif" style="height: 21px; width: 18px;">Download the files</a>.<br>
+<br>
+Next:<br>
+- <a href="http://android-er.blogspot.com/2012/07/implement-custom-linearlayout-for.html">Implement custom LinearLayout for Gallery-like HorizontalScrollView</a><br>
+- <a href="http://android-er.blogspot.com/2012/12/handle-onclick-for-our-custom.html" target="_blank">Handle onClick for our custom LinearLayout for Gallery-like HorizontalScrollView</a><br>
+<br>
+<br>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1"><span class="post-author vcard">
+by：
+<span class="fn" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+<meta content="https://plus.google.com/104843548116777096994" itemprop="url">
+<a class="g-profile" href="https://plus.google.com/104843548116777096994" rel="author" title="author profile" data-gapiscan="true" data-onload="true" data-gapiattached="true">
+<span itemprop="name">Andr.oid Eric</span>
+</a>
+</span>
+</span>
+<span class="post-comment-link">
+</span>
+<span class="post-icons">
+<span class="item-control blog-admin pid-1200014493">
+<a href="http://www.blogger.com/post-edit.g?blogID=89878749563391212&postID=6839374384909706643&from=pencil" title="Edit Post">
+<img alt="" class="icon-action" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_edit_allbkg.gif" width="18">
+</a>
+</span>
+</span>
+<span class="post-backlinks post-comment-link">
+</span>
+<div class="post-share-buttons goog-inline-block">
+<a class="goog-inline-block share-button sb-email" href="http://www.blogger.com/share-post.g?blogID=89878749563391212&postID=6839374384909706643&target=email" target="_blank" title="Email This"><span class="share-button-link-text">Email This</span></a><a class="goog-inline-block share-button sb-blog" href="http://www.blogger.com/share-post.g?blogID=89878749563391212&postID=6839374384909706643&target=blog" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=270,width=475&quot;); return false;" target="_blank" title="BlogThis!"><span class="share-button-link-text">BlogThis!</span></a><a class="goog-inline-block share-button sb-twitter" href="http://www.blogger.com/share-post.g?blogID=89878749563391212&postID=6839374384909706643&target=twitter" target="_blank" title="Share to Twitter"><span class="share-button-link-text">Share to Twitter</span></a><a class="goog-inline-block share-button sb-facebook" href="http://www.blogger.com/share-post.g?blogID=89878749563391212&postID=6839374384909706643&target=facebook" onclick="window.open(this.href, &quot;_blank&quot;, &quot;height=430,width=640&quot;); return false;" target="_blank" title="Share to Facebook"><span class="share-button-link-text">Share to Facebook</span></a><div class="goog-inline-block dummy-container"><div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background-color: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 300px; height: 20px; background-position: initial initial; background-repeat: initial initial;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 300px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" tabindex="0" vspace="0" width="100%" id="I0_1388886574650" name="I0_1388886574650" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/fastbutton.html" data-gapiattached="true" title="+1"></iframe></div></div>
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2"><span class="post-labels">
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3"></div>
+</div>
+</div>
+<div class="comments" id="comments">
+<a name="comments"></a>
+<h4>15 comments:</h4>
+<div id="Blog1_comments-block-wrapper">
+<dl class="avatar-comment-indent" id="comments-block">
+<dt class="comment-author " id="c7949529783078886237">
+<a name="c7949529783078886237"></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/12266975485726546273" rel="nofollow" onclick="" class="avatar-hovercard" id="av-0-12266975485726546273"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/photo.jpg" width="35" height="35" alt="" class="delayLoad" style="" longdesc="//lh4.googleusercontent.com/-f4DWdC39KhU/AAAAAAAAAAI/AAAAAAAAABo/2rupe0kYUGE/s512-c/photo.jpg" title="Kent Hawkings">
+
+<noscript>&lt;img src="//lh4.googleusercontent.com/-f4DWdC39KhU/AAAAAAAAAAI/AAAAAAAAABo/2rupe0kYUGE/s512-c/photo.jpg" width="35" height="35" class="photo" alt=""&gt;</noscript></a></span></div>
+<a href="http://www.blogger.com/profile/12266975485726546273" rel="nofollow">Kent Hawkings</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-7949529783078886237">
+<p>
+Hi<br>Firstly, great tutorial.<br>I just have one question. Is there anyway to select individual images from the gallery?
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1355479595436#c7949529783078886237" title="comment permalink">
+December 14, 2012 at 2:06 AM
+</a>
+<span class="item-control blog-admin pid-1678202920">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=7949529783078886237" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author " id="c823472280224369263">
+<a name="c823472280224369263"></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/00919245384316122984" rel="nofollow" onclick="" class="avatar-hovercard" id="av-1-00919245384316122984"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/photo(1).jpg" width="35" height="35" alt="" class="delayLoad" style="" longdesc="//lh3.googleusercontent.com/-3ymMo5oEGlA/AAAAAAAAAAI/AAAAAAAAABA/NaVXfWFWMls/s512-c/photo.jpg" title="Volkan Levent">
+
+<noscript>&lt;img src="//lh3.googleusercontent.com/-3ymMo5oEGlA/AAAAAAAAAAI/AAAAAAAAABA/NaVXfWFWMls/s512-c/photo.jpg" width="35" height="35" class="photo" alt=""&gt;</noscript></a></span></div>
+<a href="http://www.blogger.com/profile/00919245384316122984" rel="nofollow">Volkan Levent</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-823472280224369263">
+<p>
+Hello,<br><br>This is one of the best horizontalscrollview example on the web. <br><br>My question is how to catch clicks on Images in the horizontalScrollView?<br><br>Regards..
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1356141519373#c823472280224369263" title="comment permalink">
+December 21, 2012 at 5:58 PM
+</a>
+<span class="item-control blog-admin pid-1538706392">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=823472280224369263" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author " id="c571662563442550690">
+<a name="c571662563442550690"></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/02929442659089798674" rel="nofollow" onclick="" class="avatar-hovercard" id="av-2-02929442659089798674"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/b16-rounded.gif" width="16" height="16" alt="" title="Ankit Goyal">
+
+</a></span></div>
+<a href="http://www.blogger.com/profile/02929442659089798674" rel="nofollow">Ankit Goyal</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-571662563442550690">
+<p>
+Same questio for me also.
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1356162548282#c571662563442550690" title="comment permalink">
+December 21, 2012 at 11:49 PM
+</a>
+<span class="item-control blog-admin pid-1919033665">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=571662563442550690" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author blog-author" id="c1684988299380246387">
+<a name="c1684988299380246387"></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow" onclick="" class="avatar-hovercard" id="av-3-04983894331825656853"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/photo(2).jpg" width="35" height="35" alt="" class="delayLoad" style="" longdesc="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAACTA/3GpI6nU2wzw/s512-c/photo.jpg" title="Andr.oid Eric">
+
+<noscript>&lt;img src="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAACTA/3GpI6nU2wzw/s512-c/photo.jpg" width="35" height="35" class="photo" alt=""&gt;</noscript></a></span></div>
+<a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow">Andr.oid Eric</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-1684988299380246387">
+<p>
+Please read <a href="http://android-er.blogspot.com/2012/12/handle-onclick-for-our-custom.html" rel="nofollow">Handle onClick for our custom LinearLayout for Gallery-like HorizontalScrollView</a>.
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1356340617295#c1684988299380246387" title="comment permalink">
+December 24, 2012 at 1:16 AM
+</a>
+<span class="item-control blog-admin pid-1200014493">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=1684988299380246387" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author " id="c2108593863094064082">
+<a name="c2108593863094064082"></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/blank.gif" width="16" height="16" alt="" title="Anonymous">
+
+</span></div>
+Anonymous
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-2108593863094064082">
+<p>
+on indentation change of device TimerTask stops and application stops.<br>
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1358337177169#c2108593863094064082" title="comment permalink">
+January 16, 2013 at 3:52 AM
+</a>
+<span class="item-control blog-admin pid-775057116">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=2108593863094064082" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author " id="c2914553610015795765">
+<a name="c2914553610015795765"></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/17662966809074791922" rel="nofollow" onclick="" class="avatar-hovercard" id="av-5-17662966809074791922"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/b16-rounded.gif" width="16" height="16" alt="" title="Unknown">
+
+</a></span></div>
+<a href="http://www.blogger.com/profile/17662966809074791922" rel="nofollow">Unknown</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-2914553610015795765">
+<p>
+Very useful tutorial<br>Thanks a lot
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1358760062227#c2914553610015795765" title="comment permalink">
+January 21, 2013 at 1:21 AM
+</a>
+<span class="item-control blog-admin pid-1619488240">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=2914553610015795765" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author " id="c3191020883739737061">
+<a name="c3191020883739737061"></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/blank.gif" width="16" height="16" alt="" title="eL">
+
+</span></div>
+eL
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-3191020883739737061">
+<p>
+Hi, what part of the code that populates the images. and how to handle selecting images?
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1362532069583#c3191020883739737061" title="comment permalink">
+March 5, 2013 at 5:07 PM
+</a>
+<span class="item-control blog-admin pid-107805232">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=3191020883739737061" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author " id="c331014116705182788">
+<a name="c331014116705182788"></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/blank.gif" width="16" height="16" alt="" title="Lawrnz">
+
+</span></div>
+Lawrnz
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-331014116705182788">
+<p>
+How about if get my data from JSON?
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1362533387871#c331014116705182788" title="comment permalink">
+March 5, 2013 at 5:29 PM
+</a>
+<span class="item-control blog-admin pid-107805232">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=331014116705182788" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author blog-author" id="c7109863421429228069">
+<a name="c7109863421429228069"></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow" onclick="" class="avatar-hovercard" id="av-8-04983894331825656853"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/photo(3).jpg" width="35" height="35" alt="" class="delayLoad" style="" longdesc="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAAGzQ/fX8DICQ5PZY/s512-c/photo.jpg" title="Andr.oid Eric">
+
+<noscript>&lt;img src="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAAGzQ/fX8DICQ5PZY/s512-c/photo.jpg" width="35" height="35" class="photo" alt=""&gt;</noscript></a></span></div>
+<a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow">Andr.oid Eric</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-7109863421429228069">
+<p>
+hello eL,<br><br>please read the insertPhoto() in the code.
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1362540898776#c7109863421429228069" title="comment permalink">
+March 5, 2013 at 7:34 PM
+</a>
+<span class="item-control blog-admin pid-1200014493">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=7109863421429228069" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author " id="c3088807551074368373">
+<a name="c3088807551074368373"></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/01766704244515031236" rel="nofollow" onclick="" class="avatar-hovercard" id="av-9-01766704244515031236"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/b16-rounded.gif" width="16" height="16" alt="" title="Padda">
+
+</a></span></div>
+<a href="http://www.blogger.com/profile/01766704244515031236" rel="nofollow">Padda</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-3088807551074368373">
+<p>
+I've 500+ imgaes its throwing OOM. How do i over come..? Please give me any link that i can refer
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1365431867201#c3088807551074368373" title="comment permalink">
+April 8, 2013 at 7:37 AM
+</a>
+<span class="item-control blog-admin pid-519101152">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=3088807551074368373" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author blog-author" id="c3850500063314049377">
+<a name="c3850500063314049377"></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow" onclick="" class="avatar-hovercard" id="av-10-04983894331825656853"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/photo(3).jpg" width="35" height="35" alt="" class="delayLoad" style="" longdesc="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAAGzQ/fX8DICQ5PZY/s512-c/photo.jpg" title="Andr.oid Eric">
+
+<noscript>&lt;img src="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAAGzQ/fX8DICQ5PZY/s512-c/photo.jpg" width="35" height="35" class="photo" alt=""&gt;</noscript></a></span></div>
+<a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow">Andr.oid Eric</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-3850500063314049377">
+<p>
+Hello Padda,<br><br>If you load too much bitmap in memory, it will cause Out Of Memory.<br><br>May be you can consider to implement Memory Cache to keep your bitmap, refer to <a href="http://android-er.blogspot.com/2012/07/apply-lrucache-on-gridview.html" rel="nofollow">Apply LruCache on GridView</a>. But be careful to assign the memory for the cache, read <a href="http://android-er.blogspot.com/2012/07/lrucache-with-different-size.html" rel="nofollow">LruCache with different size</a>. A cache that is too small causes additional overhead with no benefit, a cache that is too large can once again cause java.lang.OutOfMemory exceptions and leave the rest of your app little memory to work with. I can't find any solution to find the memory size for all device!
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1366375847151#c3850500063314049377" title="comment permalink">
+April 19, 2013 at 5:50 AM
+</a>
+<span class="item-control blog-admin pid-1200014493">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=3850500063314049377" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author " id="c3971421124544126383">
+<a name="c3971421124544126383"></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/blank.gif" width="16" height="16" alt="" title="Anonymous">
+
+</span></div>
+Anonymous
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-3971421124544126383">
+<p>
+hello, I want to load image from a directory which is located in this path : mnt/sdcard/DCIM  , it's possible to do ?? Thanks
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1373301373060#c3971421124544126383" title="comment permalink">
+July 8, 2013 at 9:36 AM
+</a>
+<span class="item-control blog-admin pid-1044667054">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=3971421124544126383" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author blog-author" id="c5681689796203084392">
+<a name="c5681689796203084392"></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow" onclick="" class="avatar-hovercard" id="av-12-04983894331825656853"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/blank.gif" width="35" height="35" alt="" class="delayLoad" style="" longdesc="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAAGzQ/fX8DICQ5PZY/s512-c/photo.jpg" title="Andr.oid Eric">
+
+<noscript>&lt;img src="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAAGzQ/fX8DICQ5PZY/s512-c/photo.jpg" width="35" height="35" class="photo" alt=""&gt;</noscript></a></span></div>
+<a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow">Andr.oid Eric</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-5681689796203084392">
+<p>
+As I remember, you can store your path in targetPath directly, to load a specified directory.
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1373432855384#c5681689796203084392" title="comment permalink">
+July 9, 2013 at 10:07 PM
+</a>
+<span class="item-control blog-admin pid-1200014493">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=5681689796203084392" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author " id="c1060644972974308794">
+<a name="c1060644972974308794"></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/02556157314784473334" rel="nofollow" onclick="" class="avatar-hovercard" id="av-13-02556157314784473334"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/blank.gif" width="35" height="35" alt="" class="delayLoad" style="" longdesc="//lh3.googleusercontent.com/-CBZVGJFU5ew/AAAAAAAAAAI/AAAAAAAAADY/dRRyR2qyuM0/s512-c/photo.jpg" title="Dhaval Manvar">
+
+<noscript>&lt;img src="//lh3.googleusercontent.com/-CBZVGJFU5ew/AAAAAAAAAAI/AAAAAAAAADY/dRRyR2qyuM0/s512-c/photo.jpg" width="35" height="35" class="photo" alt=""&gt;</noscript></a></span></div>
+<a href="http://www.blogger.com/profile/02556157314784473334" rel="nofollow">Dhaval Manvar</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-1060644972974308794">
+<p>
+How can i use horizontal scrollview inside vertical scrollview?<br><br>i tried to use viewflipper inside scrollview but it did not work.<br><br><br>is there any way?<br><br><br>
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1388403294803#c1060644972974308794" title="comment permalink">
+December 30, 2013 at 3:34 AM
+</a>
+<span class="item-control blog-admin pid-1354503531">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=1060644972974308794" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+<dt class="comment-author blog-author" id="c6605776967200331436">
+<a name="c6605776967200331436"></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow" onclick="" class="avatar-hovercard" id="av-14-04983894331825656853"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/blank.gif" width="35" height="35" alt="" class="delayLoad" style="" longdesc="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAAKFM/FGvvSYNMIrc/s512-c/photo.jpg" title="Andr.oid Eric">
+
+<noscript>&lt;img src="//lh6.googleusercontent.com/-IBkERwHVqpc/AAAAAAAAAAI/AAAAAAAAKFM/FGvvSYNMIrc/s512-c/photo.jpg" width="35" height="35" class="photo" alt=""&gt;</noscript></a></span></div>
+<a href="http://www.blogger.com/profile/04983894331825656853" rel="nofollow">Andr.oid Eric</a>
+said...
+</dt>
+<dd class="comment-body" id="Blog1_cmt-6605776967200331436">
+<p>
+hello Dhaval Manvar,<br><br>please read: <a href="http://android-er.blogspot.com/2014/01/horizontal-vertical-scrollable-view.html" rel="nofollow">Horizontal-Vertical scrollable view</a>.
+</p>
+</dd>
+<dd class="comment-footer">
+<span class="comment-timestamp">
+<a href="http://android-er.blogspot.com/2012/07/implement-gallery-like.html?showComment=1388576164899#c6605776967200331436" title="comment permalink">
+January 1, 2014 at 3:36 AM
+</a>
+<span class="item-control blog-admin pid-1200014493">
+<a class="comment-delete" href="http://www.blogger.com/delete-comment.g?blogID=89878749563391212&postID=6605776967200331436" title="Delete Comment">
+<img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_delete13.gif">
+</a>
+</span>
+</span>
+</dd>
+</dl>
+</div>
+<p class="comment-footer">
+<a href="http://www.blogger.com/comment.g?blogID=89878749563391212&postID=6839374384909706643" onclick="">Post a Comment</a>
+</p>
+<div id="backlinks-container">
+<div id="Blog1_backlinks-container"><a name="links"></a><h4>links to this post</h4>
+<p class="comment-footer">
+<a class="comment-link" href="http://www.blogger.com/blog-this.g" id="Blog1_backlinks-create-link" target="_blank">Create a Link</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+        </div></div>
+      
+<!-- google_ad_section_end -->
+</div>
+<div class="blog-pager" id="blog-pager">
+<span id="blog-pager-newer-link">
+<a class="blog-pager-newer-link" href="http://android-er.blogspot.com/2012/07/implement-custom-linearlayout-for.html" id="Blog1_blog-pager-newer-link" title="Newer Post">Newer Post</a>
+</span>
+<span id="blog-pager-older-link">
+<a class="blog-pager-older-link" href="http://android-er.blogspot.com/2012/07/dialog-animation-using-windowanimations.html" id="Blog1_blog-pager-older-link" title="Older Post">Older Post</a>
+</span>
+<a class="home-link" href="http://android-er.blogspot.com/">Home</a>
+</div>
+<div class="clear"></div>
+<div class="post-feeds">
+<div class="feed-links">
+Subscribe to:
+<a class="feed-link" href="http://android-er.blogspot.com/feeds/6839374384909706643/comments/default" target="_blank" type="application/atom+xml">Post Comments (Atom)</a>
+</div>
+</div>
+<script type="text/javascript">window.___gcfg = {'lang': 'en'};</script>
+</div><div class="widget HTML" id="HTML1">
+<div class="widget-content">
+<script type="text/javascript">
+	 var infolink_pid=177755;
+	var infolink_wsid = 0;
+	</script>
+<script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/infolinks_main.js">
+</script>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML1&action=editWidget&sectionId=main" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML1&quot;));" target="configHTML1" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" id="HTML3">
+<div class="widget-content">
+<center>
+<!-- Facebook Badge START --><a href="http://www.facebook.com/people/Andr-Oid/100000399406125" target="_TOP" style="font-family: &quot;lucida grande&quot;,tahoma,verdana,arial,sans-serif; font-size: 11px; font-variant: normal; font-style: normal; font-weight: normal; color: #3B5998; text-decoration: none;" title="Andr Oid">Andr Oid</a><span style="font-family: &quot;lucida grande&quot;,tahoma,verdana,arial,sans-serif; font-size: 11px; line-height: 16px; font-variant: normal; font-style: normal; font-weight: normal; color: #555555; text-decoration: none;">&nbsp;|&nbsp;</span><a href="http://www.facebook.com/badges/" target="_TOP" style="font-family: &quot;lucida grande&quot;,tahoma,verdana,arial,sans-serif; font-size: 11px; font-variant: normal; font-style: normal; font-weight: normal; color: #3B5998; text-decoration: none;" title="Make your own badge!">Create Your Badge</a><br><a href="http://www.facebook.com/people/Andr-Oid/100000399406125" target="_TOP" title="Andr Oid"><img src="./Android-er  Implement Gallery-like HorizontalScrollView_files/100000399406125.228.191086203.png" width="402" height="84" style="border: 0px;"></a><!-- Facebook Badge END -->
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML3&action=editWidget&sectionId=main" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML3&quot;));" target="configHTML3" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div></div>
+</div>
+</div>
+<div class="column-left-outer">
+<div class="column-left-inner">
+<aside>
+</aside>
+</div>
+</div>
+<div class="column-right-outer">
+<div class="column-right-inner">
+<aside>
+<div class="sidebar section" id="sidebar-right-1"><div class="widget AdSense" id="AdSense3">
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-5790603037343360";
+google_ad_host = "ca-host-pub-1556223355139109";
+google_ad_host_channel = "L0001";
+/* android-er_sidebar-right-1_AdSense3_300x250_as */
+google_ad_slot = "6147605425";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/show_ads.js">
+</script>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=AdSense&widgetId=AdSense3&action=editWidget&sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;AdSense3&quot;));" target="configAdSense3" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div><div class="widget PlusFollowers" id="PlusFollowers1">
+<div class="widget-content">
+<div id="___plus_0" style="text-indent: 0px; margin: 0px; padding: 0px; background-color: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 330px; height: 284px; background-position: initial initial; background-repeat: initial initial;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 330px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 284px;" tabindex="0" vspace="0" width="100%" id="I1_1388886574660" name="I1_1388886574660" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/followers.html" data-gapiattached="true" title="+1"></iframe></div>
+<script type="text/javascript">
+        window.___gcfg = {'lang': 'en'};
+      </script>
+</div>
+</div><div class="widget AdSense" id="AdSense2">
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-5790603037343360";
+google_ad_host = "ca-host-pub-1556223355139109";
+google_ad_host_channel = "L0001";
+/* android-er_sidebar-right-1_AdSense2_300x250_as */
+google_ad_slot = "7624338624";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/show_ads.js">
+</script>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=AdSense&widgetId=AdSense2&action=editWidget&sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;AdSense2&quot;));" target="configAdSense2" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div><div class="widget PopularPosts" id="PopularPosts1">
+<h2>Popular Posts</h2>
+<div class="widget-content popular-posts">
+<ul>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-thumbnail">
+<a href="http://android-er.blogspot.com/2012/12/a-simple-example-using-google-maps.html" target="_blank">
+<img alt="" border="0" height="72" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon_MapsAPIv2.png" width="72">
+</a>
+</div>
+<div class="item-title"><a href="http://android-er.blogspot.com/2012/12/a-simple-example-using-google-maps.html">A simple example using Google Maps Android API v2 </a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-thumbnail">
+<a href="http://android-er.blogspot.com/2010/03/using-color-in-android.html" target="_blank">
+<img alt="" border="0" height="72" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/AndroidColor_01.png" width="72">
+</a>
+</div>
+<div class="item-title"><a href="http://android-er.blogspot.com/2010/03/using-color-in-android.html">Using color in Android, by XML</a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-thumbnail">
+<a href="http://android-er.blogspot.com/2011/01/simple-communication-using.html" target="_blank">
+<img alt="" border="0" height="72" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/AndroidClient_01.png" width="72">
+</a>
+</div>
+<div class="item-title"><a href="http://android-er.blogspot.com/2011/01/simple-communication-using.html">Simple communication using java.net.Socket</a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-thumbnail">
+<a href="http://android-er.blogspot.com/2011/06/simple-example-using-androids-sqlite_02.html" target="_blank">
+<img alt="" border="0" height="72" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/AndroidSQLite_02.png" width="72">
+</a>
+</div>
+<div class="item-title"><a href="http://android-er.blogspot.com/2011/06/simple-example-using-androids-sqlite_02.html">A simple example using Android's SQLite database, exposes data from Cursor to a ListView.</a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-thumbnail">
+<a href="./Android-er  Implement Gallery-like HorizontalScrollView_files/Android-er  Implement Gallery-like HorizontalScrollView.html" target="_blank">
+<img alt="" border="0" height="72" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/AndroidHorizontalScrollViewGallery(1).png" width="72">
+</a>
+</div>
+<div class="item-title"><a href="./Android-er  Implement Gallery-like HorizontalScrollView_files/Android-er  Implement Gallery-like HorizontalScrollView.html">Implement Gallery-like HorizontalScrollView</a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-thumbnail">
+<a href="http://android-er.blogspot.com/2012/07/example-of-using-preferencefragment.html" target="_blank">
+<img alt="" border="0" height="72" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/AndroidPreferenceFragment.png" width="72">
+</a>
+</div>
+<div class="item-title"><a href="http://android-er.blogspot.com/2012/07/example-of-using-preferencefragment.html">Example of using PreferenceFragment</a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-thumbnail">
+<a href="http://android-er.blogspot.com/2010/10/simple-example-of-alarm-service-using.html" target="_blank">
+<img alt="" border="0" height="72" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/AndroidAlarmService_01.png" width="72">
+</a>
+</div>
+<div class="item-title"><a href="http://android-er.blogspot.com/2010/10/simple-example-of-alarm-service-using.html">A simple example of Alarm Service, using AlarmManager</a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-thumbnail">
+<a href="http://android-er.blogspot.com/2012/03/example-of-using-popupwindow.html" target="_blank">
+<img alt="" border="0" height="72" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/PopupWindow.png" width="72">
+</a>
+</div>
+<div class="item-title"><a href="http://android-er.blogspot.com/2012/03/example-of-using-popupwindow.html">Example of using PopupWindow</a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-title"><a href="http://android-er.blogspot.com/2010/10/cancel-alarm-service-in-ondisabled.html">Cancel Alarm Service in onDisabled()</a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li>
+<div class="item-thumbnail-only">
+<div class="item-thumbnail">
+<a href="http://android-er.blogspot.com/2010/01/implement-simple-file-explorer-in.html" target="_blank">
+<img alt="" border="0" height="72" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/AndroidExplorer_01.png" width="72">
+</a>
+</div>
+<div class="item-title"><a href="http://android-er.blogspot.com/2010/01/implement-simple-file-explorer-in.html">Implement a simple File Explorer in Android</a></div>
+</div>
+<div style="clear: both;"></div>
+</li>
+</ul>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=PopularPosts&widgetId=PopularPosts1&action=editWidget&sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;PopularPosts1&quot;));" target="configPopularPosts1" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div><div class="widget AdSense" id="AdSense1">
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-5790603037343360";
+google_ad_host = "ca-host-pub-1556223355139109";
+google_ad_host_channel = "L0001";
+/* android-er_sidebar-right-1_AdSense1_300x250_as */
+google_ad_slot = "4670872225";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/show_ads.js">
+</script>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=AdSense&widgetId=AdSense1&action=editWidget&sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;AdSense1&quot;));" target="configAdSense1" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div><div class="widget HTML" id="HTML6">
+<div class="widget-content">
+<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-5790603037343360:iogv0g8snnp">
+    <input type="hidden" name="ie" value="ISO-8859-1">
+    <input type="text" name="q" size="35" style="background-image: url(http://www.google.com/cse/intl/en/images/google_custom_search_watermark.gif); background-color: rgb(255, 255, 255); background-position: 0% 50%; background-repeat: no-repeat no-repeat;">
+    <input type="submit" name="sa" value="Search">
+  </div>
+<input name="siteurl" type="hidden" value="android-er.blogspot.com/2012/07/implement-gallery-like.html"><input name="ref" type="hidden" value="stackoverflow.com/questions/17489390/image-gallery-with-a-horizontal-scrollview"><input name="ss" type="hidden" value=""></form>
+
+<script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/brand"></script>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML6&action=editWidget&sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML6&quot;));" target="configHTML6" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget BlogArchive" id="BlogArchive1">
+<h2>Blog Archive</h2>
+<div class="widget-content">
+<div class="ltr" id="ArchiveList">
+<div id="BlogArchive1_ArchiveList">
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/search?updated-min=2014-01-01T00:00:00-08:00&updated-max=2015-01-01T00:00:00-08:00&max-results=2">2014</a>
+<span class="post-count" dir="ltr">(2)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2014_01_01_archive.html">January</a>
+<span class="post-count" dir="ltr">(2)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/search?updated-min=2013-01-01T00:00:00-08:00&updated-max=2014-01-01T00:00:00-08:00&max-results=50">2013</a>
+<span class="post-count" dir="ltr">(381)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_12_01_archive.html">December</a>
+<span class="post-count" dir="ltr">(29)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_11_01_archive.html">November</a>
+<span class="post-count" dir="ltr">(17)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_10_01_archive.html">October</a>
+<span class="post-count" dir="ltr">(28)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_09_01_archive.html">September</a>
+<span class="post-count" dir="ltr">(29)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_08_01_archive.html">August</a>
+<span class="post-count" dir="ltr">(30)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_07_01_archive.html">July</a>
+<span class="post-count" dir="ltr">(38)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_06_01_archive.html">June</a>
+<span class="post-count" dir="ltr">(36)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_05_01_archive.html">May</a>
+<span class="post-count" dir="ltr">(33)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_04_01_archive.html">April</a>
+<span class="post-count" dir="ltr">(30)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_03_01_archive.html">March</a>
+<span class="post-count" dir="ltr">(36)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_02_01_archive.html">February</a>
+<span class="post-count" dir="ltr">(35)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2013_01_01_archive.html">January</a>
+<span class="post-count" dir="ltr">(40)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/search?updated-min=2012-01-01T00:00:00-08:00&updated-max=2013-01-01T00:00:00-08:00&max-results=50">2012</a>
+<span class="post-count" dir="ltr">(381)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_12_01_archive.html">December</a>
+<span class="post-count" dir="ltr">(32)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_11_01_archive.html">November</a>
+<span class="post-count" dir="ltr">(12)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_10_01_archive.html">October</a>
+<span class="post-count" dir="ltr">(28)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_09_01_archive.html">September</a>
+<span class="post-count" dir="ltr">(34)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_08_01_archive.html">August</a>
+<span class="post-count" dir="ltr">(23)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_07_01_archive.html">July</a>
+<span class="post-count" dir="ltr">(41)</span>
+<ul class="posts">
+<li><a href="http://android-er.blogspot.com/2012/07/google-fiber-starts-with-internet.html">Introducing Google Fiber: The Next Chapter of the ...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/introduction-to-android-app-development.html">Introduction to Android App Development for the Ki...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/apply-lrucache-on-gridview.html">Apply LruCache on GridView</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/factory-images-of-jelly-bean-for-galaxy.html">Factory images of Jelly Bean for Galaxy Nexus and ...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/gallery-like-single-column-gridview.html">Gallery-like single column GridView</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/gridview-loading-photos-from-sd-card.html">GridView loading photos from SD Card</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/vertical-gallery-like-scrollview.html">Vertical Gallery-like ScrollView</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/implement-custom-linearlayout-for.html">Implement custom LinearLayout for Gallery-like Hor...</a></li>
+<li><a href="./Android-er  Implement Gallery-like HorizontalScrollView_files/Android-er  Implement Gallery-like HorizontalScrollView.html">Implement Gallery-like HorizontalScrollView</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/dialog-animation-using-windowanimations.html">Dialog Animation using windowAnimations</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/android-sdk-tools-revision-2001-ndk.html">Android SDK Tools Revision 20.0.1, NDK revision 8b...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/implement-gesturedetectorongestureliste.html">Implement GestureDetector/OnGestureListener to det...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/error-of-getlocationinwindow-and.html">Error of getLocationInWindow() and getLocationOnSc...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/complete-list-of-all-new-features-of.html">Complete list of all new features of Android 4.1 J...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/implement-grouped-checkbox-on-action.html">Implement grouped CheckBox on Action Menu</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/lrucache-with-different-size.html">LruCache with different size</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/caching-bitmaps-with-lrucache.html">Caching Bitmaps with LruCache</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/implement-android-gallery-widget-with.html">Implement Android Gallery widget with scale-down b...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/scale-bitmap-efficiently.html">Scale bitmap Efficiently</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/implement-android-gallery-widget.html">Implement Android Gallery widget</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/android-apps-with-eclipse.html">Android Apps with Eclipse</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/beginning-android-web-apps-development.html">Beginning Android Web Apps Development: Develop fo...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/android-accessory-development-kit-adk.html">Android Accessory Development Kit (ADK) for 2012</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/sort-directoryfile-in-order-of.html">Sort directory/file in order of lastModified time</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/sort-directoryfile-in-alphabetical.html">Sort directory/file in alphabetical order ignore c...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/example-of-file-explorer-in-android.html">Example of File Explorer in Android</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/preferencefragment-with-listpreference.html">PreferenceFragment with ListPreference</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/example-of-using-preferencefragment.html">Example of using PreferenceFragment</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/enable-hardware-acceleration-using-java.html">Enable Hardware Acceleration using Java code</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/enable-hardware-acceleration-for.html">Enable Hardware Acceleration for Android 3.0 or la...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/rss-feeder-reader-run-in-asynctask.html">RSS feed reader run in AsyncTask</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/pre-announce-new-youtube-android-player.html">Pre-announce - New YouTube Android Player Tools@Go...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/android-apps-in-google-play-google-io.html">Android Apps in Google Play - Google I/O 2012</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/create-round-button.html">Create button with round background</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/creating-alias-resources.html">Creating alias resources</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/providing-alternative-resources.html">Providing Alternative Resources</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/109-of-android-devices-running-ice.html">10.9% of Android devices running Ice Cream Sandwic...</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/life-cycle-of-masterdetailflow.html">Life cycle of MasterDetailFlow HelloWorld</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/android-41-jelly-bean-on-htc-one-x.html">Android 4.1 Jelly Bean on HTC One X</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/boycottapple.html">#BoycottApple</a></li>
+<li><a href="http://android-er.blogspot.com/2012/07/error-method-xxx-of-type-yyy-must.html">Error: The method onItemSelected(String) of type I...</a></li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_06_01_archive.html">June</a>
+<span class="post-count" dir="ltr">(40)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_05_01_archive.html">May</a>
+<span class="post-count" dir="ltr">(42)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_04_01_archive.html">April</a>
+<span class="post-count" dir="ltr">(24)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_03_01_archive.html">March</a>
+<span class="post-count" dir="ltr">(38)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_02_01_archive.html">February</a>
+<span class="post-count" dir="ltr">(33)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2012_01_01_archive.html">January</a>
+<span class="post-count" dir="ltr">(34)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/search?updated-min=2011-01-01T00:00:00-08:00&updated-max=2012-01-01T00:00:00-08:00&max-results=50">2011</a>
+<span class="post-count" dir="ltr">(307)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_12_01_archive.html">December</a>
+<span class="post-count" dir="ltr">(26)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_11_01_archive.html">November</a>
+<span class="post-count" dir="ltr">(13)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_10_01_archive.html">October</a>
+<span class="post-count" dir="ltr">(28)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_09_01_archive.html">September</a>
+<span class="post-count" dir="ltr">(25)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_08_01_archive.html">August</a>
+<span class="post-count" dir="ltr">(25)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_07_01_archive.html">July</a>
+<span class="post-count" dir="ltr">(33)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_06_01_archive.html">June</a>
+<span class="post-count" dir="ltr">(28)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_05_01_archive.html">May</a>
+<span class="post-count" dir="ltr">(40)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_04_01_archive.html">April</a>
+<span class="post-count" dir="ltr">(26)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_03_01_archive.html">March</a>
+<span class="post-count" dir="ltr">(21)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_02_01_archive.html">February</a>
+<span class="post-count" dir="ltr">(22)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2011_01_01_archive.html">January</a>
+<span class="post-count" dir="ltr">(20)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/search?updated-min=2010-01-01T00:00:00-08:00&updated-max=2011-01-01T00:00:00-08:00&max-results=50">2010</a>
+<span class="post-count" dir="ltr">(154)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_12_01_archive.html">December</a>
+<span class="post-count" dir="ltr">(14)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_11_01_archive.html">November</a>
+<span class="post-count" dir="ltr">(15)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_10_01_archive.html">October</a>
+<span class="post-count" dir="ltr">(14)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_09_01_archive.html">September</a>
+<span class="post-count" dir="ltr">(7)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_08_01_archive.html">August</a>
+<span class="post-count" dir="ltr">(17)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_07_01_archive.html">July</a>
+<span class="post-count" dir="ltr">(25)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_06_01_archive.html">June</a>
+<span class="post-count" dir="ltr">(24)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_05_01_archive.html">May</a>
+<span class="post-count" dir="ltr">(12)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_04_01_archive.html">April</a>
+<span class="post-count" dir="ltr">(6)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_03_01_archive.html">March</a>
+<span class="post-count" dir="ltr">(8)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_02_01_archive.html">February</a>
+<span class="post-count" dir="ltr">(3)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2010_01_01_archive.html">January</a>
+<span class="post-count" dir="ltr">(9)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/search?updated-min=2009-01-01T00:00:00-08:00&updated-max=2010-01-01T00:00:00-08:00&max-results=50">2009</a>
+<span class="post-count" dir="ltr">(117)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2009_12_01_archive.html">December</a>
+<span class="post-count" dir="ltr">(19)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2009_11_01_archive.html">November</a>
+<span class="post-count" dir="ltr">(14)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2009_10_01_archive.html">October</a>
+<span class="post-count" dir="ltr">(33)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2009_09_01_archive.html">September</a>
+<span class="post-count" dir="ltr">(16)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2009_08_01_archive.html">August</a>
+<span class="post-count" dir="ltr">(21)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2009_07_01_archive.html">July</a>
+<span class="post-count" dir="ltr">(13)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2009_05_01_archive.html">May</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/search?updated-min=2008-01-01T00:00:00-08:00&updated-max=2009-01-01T00:00:00-08:00&max-results=9">2008</a>
+<span class="post-count" dir="ltr">(9)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2008_11_01_archive.html">November</a>
+<span class="post-count" dir="ltr">(2)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2008_09_01_archive.html">September</a>
+<span class="post-count" dir="ltr">(4)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2008_08_01_archive.html">August</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2008_06_01_archive.html">June</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2008_02_01_archive.html">February</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/search?updated-min=2007-01-01T00:00:00-08:00&updated-max=2008-01-01T00:00:00-08:00&max-results=8">2007</a>
+<span class="post-count" dir="ltr">(8)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2007_12_01_archive.html">December</a>
+<span class="post-count" dir="ltr">(3)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle">
+<span class="zippy"></span>
+</a>
+<a class="post-count-link" href="http://android-er.blogspot.com/2007_11_01_archive.html">November</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget&sectionId=sidebar-right-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;BlogArchive1&quot;));" target="configBlogArchive1" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div></div>
+<table border="0" cellpadding="0" cellspacing="0" class="section-columns columns-2">
+<tbody>
+<tr>
+<td class="first columns-cell">
+<div class="sidebar section" id="sidebar-right-2-1"><div class="widget HTML" id="HTML11">
+<div class="widget-content">
+<center>
+
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML11&action=editWidget&sectionId=sidebar-right-2-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML11&quot;));" target="configHTML11" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" id="HTML7">
+<div class="widget-content">
+<center>
+
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML7&action=editWidget&sectionId=sidebar-right-2-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML7&quot;));" target="configHTML7" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" id="HTML2">
+<div class="widget-content">
+<center>
+
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML2&action=editWidget&sectionId=sidebar-right-2-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML2&quot;));" target="configHTML2" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" id="HTML17">
+<div class="widget-content">
+<center>
+
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML17&action=editWidget&sectionId=sidebar-right-2-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML17&quot;));" target="configHTML17" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div></div>
+</td>
+<td class="columns-cell">
+<div class="sidebar section" id="sidebar-right-2-2"><div class="widget HTML" id="HTML5">
+<div class="widget-content">
+<center>
+
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML5&action=editWidget&sectionId=sidebar-right-2-2" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML5&quot;));" target="configHTML5" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" id="HTML8">
+<div class="widget-content">
+<center>
+
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML8&action=editWidget&sectionId=sidebar-right-2-2" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML8&quot;));" target="configHTML8" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" id="HTML16">
+<div class="widget-content">
+<center>
+
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML16&action=editWidget&sectionId=sidebar-right-2-2" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML16&quot;));" target="configHTML16" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" id="HTML9">
+<div class="widget-content">
+<center>
+
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML9&action=editWidget&sectionId=sidebar-right-2-2" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML9&quot;));" target="configHTML9" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div></div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sidebar section" id="sidebar-right-3"><div class="widget HTML" id="HTML12">
+<div class="widget-content" data-twttr-id="twttr-sandbox-0">
+<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-timeline twitter-timeline-rendered" style="border: none; max-width: 100%; min-width: 180px;" title="Twitter Timeline" width="300" height="400"></iframe>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML12&action=editWidget&sectionId=sidebar-right-3" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML12&quot;));" target="configHTML12" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div></div>
+</aside>
+</div>
+</div>
+</div>
+<div style="clear: both"></div>
+<!-- columns -->
+</div>
+<!-- main -->
+</div>
+</div>
+<div class="main-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<footer>
+<div class="footer-outer">
+<div class="footer-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left footer-fauxborder-left">
+<div class="fauxborder-right footer-fauxborder-right"></div>
+<div class="region-inner footer-inner">
+<div class="foot section" id="footer-1"><div class="widget Label" id="Label1">
+<h2>Labels (incompleted)</h2>
+<div class="widget-content cloud-label-widget-content">
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/accessory">accessory</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/ActionBarCompat">ActionBarCompat</a>
+<span class="label-count" dir="ltr">(7)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%204.4">Android 4.4</a>
+<span class="label-count" dir="ltr">(5)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20Apps">Android Apps</a>
+<span class="label-count" dir="ltr">(5)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20ActionBarCompat">Android code sample: ActionBarCompat</a>
+<span class="label-count" dir="ltr">(4)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20Activity">Android code sample: Activity</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20AnimationDrawable">Android code sample: AnimationDrawable</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20AsyncTask">Android code sample: AsyncTask</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-5">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20bitmap%20and%20image">Android code sample: bitmap and image</a>
+<span class="label-count" dir="ltr">(32)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20Date%20Time">Android code sample: Date Time</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20detect%20touch">Android code sample: detect touch</a>
+<span class="label-count" dir="ltr">(10)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20Detecting%20Gestures">Android code sample: Detecting Gestures</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20general%20info">Android code sample: general info</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-5">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20Google%20Maps%20Android%20API%20v2">Android code sample: Google Maps Android API v2</a>
+<span class="label-count" dir="ltr">(39)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20ImageSwitcher">Android code sample: ImageSwitcher</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20Layout">Android code sample: Layout</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20ListFragment">Android code sample: ListFragment</a>
+<span class="label-count" dir="ltr">(3)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20ListView">Android code sample: ListView</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20Locale">Android code sample: Locale</a>
+<span class="label-count" dir="ltr">(3)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20LocationSource%20and%20LocationListener">Android code sample: LocationSource and LocationListener</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20MapFragment">Android code sample: MapFragment</a>
+<span class="label-count" dir="ltr">(3)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20PreferenceFragment">Android code sample: PreferenceFragment</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20Socket">Android code sample: Socket</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20SQLite%20database">Android code sample: SQLite database</a>
+<span class="label-count" dir="ltr">(8)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20storage">Android code sample: storage</a>
+<span class="label-count" dir="ltr">(3)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20SupportMapFragment">Android code sample: SupportMapFragment</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20TextSwitcher">Android code sample: TextSwitcher</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20thread">Android code sample: thread</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20Timer%20and%20TimerTask">Android code sample: Timer and TimerTask</a>
+<span class="label-count" dir="ltr">(3)</span>
+</span>
+<span class="label-size label-size-5">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20ui">Android code sample: ui</a>
+<span class="label-count" dir="ltr">(26)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20usb">Android code sample: usb</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20VelocityTracker">Android code sample: VelocityTracker</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20ViewAnimator">Android code sample: ViewAnimator</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20ViewFlipper">Android code sample: ViewFlipper</a>
+<span class="label-count" dir="ltr">(4)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20ViewSwitcher">Android code sample: ViewSwitcher</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20code%20sample%3A%20YouTube%20Android%20Player%20API">Android code sample: YouTube Android Player API</a>
+<span class="label-count" dir="ltr">(7)</span>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20Developer%27s%20news">Android Developer's news</a>
+<span class="label-count" dir="ltr">(20)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20Emulator">Android Emulator</a>
+<span class="label-count" dir="ltr">(3)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20NDK">Android NDK</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%20Studio">Android Studio</a>
+<span class="label-count" dir="ltr">(9)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Android%2FJava%20programming%20basic">Android/Java programming basic</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/animation">animation</a>
+<span class="label-count" dir="ltr">(15)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Azure">Azure</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Bitmap">Bitmap</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Books%20for%20Android%20development">Books for Android development</a>
+<span class="label-count" dir="ltr">(22)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Books%20for%20mobile%20app%20development">Books for mobile app development</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Books%20for%20web%20development">Books for web development</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Books%20for%20Windows%20development">Books for Windows development</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/color">color</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/development">development</a>
+<span class="label-count" dir="ltr">(9)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Dynamic%20View">Dynamic View</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Eclipse">Eclipse</a>
+<span class="label-count" dir="ltr">(5)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/emulator">emulator</a>
+<span class="label-count" dir="ltr">(4)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Google%20Chromecast">Google Chromecast</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Google%20Maps%20Android%20API%20v2">Google Maps Android API v2</a>
+<span class="label-count" dir="ltr">(9)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Google%20Maps%20JavaScript%20API%20v3">Google Maps JavaScript API v3</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Google%20Maps%20Mobile%20APIs">Google Maps Mobile APIs</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Google%20Mobile%20Ads%20SDK%20for%20Android">Google Mobile Ads SDK for Android</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Google%20Play%20services%20SDK">Google Play services SDK</a>
+<span class="label-count" dir="ltr">(4)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Google%27s%20news">Google's news</a>
+<span class="label-count" dir="ltr">(9)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/gphone">gphone</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/how%20to">how to</a>
+<span class="label-count" dir="ltr">(21)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/HTC">HTC</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/IllegalArgumentException">IllegalArgumentException</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/info">info</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Intent">Intent</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/introduction">introduction</a>
+<span class="label-count" dir="ltr">(4)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/IP%20address">IP address</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/IPV6">IPV6</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/JavaFX%20for%20Android">JavaFX for Android</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/KitKat">KitKat</a>
+<span class="label-count" dir="ltr">(5)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/LatLng">LatLng</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Lint%20Error%20Checking">Lint Error Checking</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Location">Location</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Memory">Memory</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Microsoft%27s%20news">Microsoft's news</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/news">news</a>
+<span class="label-count" dir="ltr">(10)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/NoClassDefFoundError">NoClassDefFoundError</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/OpenWeatherMap">OpenWeatherMap</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/OutOfMemoryError">OutOfMemoryError</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/PhoneGap">PhoneGap</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/PopupWindow">PopupWindow</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Processing%20Language">Processing Language</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/products">products</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Qt">Qt</a>
+<span class="label-count" dir="ltr">(3)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Qt%20Mobile">Qt Mobile</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/setup">setup</a>
+<span class="label-count" dir="ltr">(3)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Spinner">Spinner</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/step-by-step%20series">step-by-step series</a>
+<span class="label-count" dir="ltr">(6)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/Support%20Library">Support Library</a>
+<span class="label-count" dir="ltr">(4)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/tutorial">tutorial</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/UI%20and%20design">UI and design</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/user%20location">user location</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<span class="label-size label-size-4">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/video%20tutorial">video tutorial</a>
+<span class="label-count" dir="ltr">(12)</span>
+</span>
+<span class="label-size label-size-1">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/XML">XML</a>
+<span class="label-count" dir="ltr">(1)</span>
+</span>
+<span class="label-size label-size-3">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/YouTube%20Android%20Player%20API">YouTube Android Player API</a>
+<span class="label-count" dir="ltr">(5)</span>
+</span>
+<span class="label-size label-size-2">
+<a dir="ltr" href="http://android-er.blogspot.com/search/label/YouTube%20API">YouTube API</a>
+<span class="label-count" dir="ltr">(2)</span>
+</span>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=Label&widgetId=Label1&action=editWidget&sectionId=footer-1" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;Label1&quot;));" target="configLabel1" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div></div>
+<table border="0" cellpadding="0" cellspacing="0" class="section-columns columns-2">
+<tbody>
+<tr>
+<td class="first columns-cell">
+<div class="foot section" id="footer-2-1"></div>
+</td>
+<td class="columns-cell">
+<div class="foot section" id="footer-2-2"></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- outside of the include in order to lock Attribution widget -->
+<div class="foot section" id="footer-3"><div class="widget Attribution" id="Attribution1">
+<div class="widget-content" style="text-align: center;">
+Watermark template. Powered by <a href="http://www.blogger.com/" target="_blank">Blogger</a>.
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=Attribution&widgetId=Attribution1&action=editWidget&sectionId=footer-3" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;Attribution1&quot;));" target="configAttribution1" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget HTML" id="HTML4">
+<div class="widget-content">
+<center>
+<!-- Site Meter XHTML Strict 1.0 -->
+<a target="_top" href="http://www.sitemeter.com/stats.asp?site=s22androider" id="idSiteMeterHREF"><img border="0" alt="Site Meter" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/meter.asp"></a><script src="./Android-er  Implement Gallery-like HorizontalScrollView_files/counter.js" type="text/javascript">
+</script>
+<!-- Copyright (c)2006 Site Meter -->
+<br>
+</center>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=89878749563391212&widgetType=HTML&widgetId=HTML4&action=editWidget&sectionId=footer-3" onclick="return _WidgetManager._PopupConfig(document.getElementById(&quot;HTML4&quot;));" target="configHTML4" title="Edit">
+<img alt="" height="18" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/icon18_wrench_allbkg.png" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div></div>
+</div>
+</div>
+<div class="footer-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</footer>
+<!-- content -->
+</div>
+</div>
+<div class="content-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div><script type="application/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/analytics.js"></script>
+<script type="text/javascript">
+    window.setTimeout(function() {
+        document.body.className = document.body.className.replace('loading', '');
+      }, 10);
+  </script>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('widgetJsBefore');
+</script><script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/645744161-widgets.js"></script>
+<script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/plusone.js" gapi_processed="true"></script>
+<script type="text/javascript">
+if (typeof(BLOG_attachCsiOnload) != 'undefined' && BLOG_attachCsiOnload != null) { window['blogger_templates_experiment_id'] = "templatesV2";window['blogger_blog_id'] = '89878749563391212';BLOG_attachCsiOnload('item_'); }_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d89878749563391212','//android-er.blogspot.com/2012/07/implement-gallery-like.html','89878749563391212');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '89878749563391212', 'bloggerUrl': 'http://www.blogger.com', 'title': 'Android-er', 'pageType': 'item', 'url': 'http://android-er.blogspot.com/2012/07/implement-gallery-like.html', 'canonicalUrl': 'http://android-er.blogspot.com/2012/07/implement-gallery-like.html', 'canonicalHomepageUrl': 'http://android-er.blogspot.com/', 'homepageUrl': 'http://android-er.blogspot.com/', 'blogspotFaviconUrl': 'http://android-er.blogspot.com/favicon.ico', 'enabledCommentProfileImages': true, 'adultContent': false, 'disableAdSenseWidget': false, 'analyticsAccountNumber': 'UA-45116094-1', 'searchLabel': '', 'searchQuery': '', 'pageName': 'Implement Gallery-like HorizontalScrollView', 'pageTitle': 'Android-er: Implement Gallery-like HorizontalScrollView', 'metaDescription': '', 'encoding': 'UTF-8', 'locale': 'en', 'localeUnderscoreDelimited': 'en', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Android-er - Atom\42 href\75\42http://android-er.blogspot.com/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42Android-er - RSS\42 href\75\42http://android-er.blogspot.com/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42Android-er - Atom\42 href\75\42http://www.blogger.com/feeds/89878749563391212/posts/default\42 /\76\n\n\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Android-er - Atom\42 href\75\42http://android-er.blogspot.com/feeds/6839374384909706643/comments/default\42 /\76\n', 'meTag': '', 'openIdOpTag': '', 'postImageThumbnailUrl': 'http://3.bp.blogspot.com/-eI6AcyRZHwg/UAmzViQ-siI/AAAAAAAAD50/W3R-iib5UiY/s72-c/AndroidHorizontalScrollViewGallery.png', 'imageSrcTag': '\74link rel\75\42image_src\42 href\75\42http://3.bp.blogspot.com/-eI6AcyRZHwg/UAmzViQ-siI/AAAAAAAAD50/W3R-iib5UiY/s72-c/AndroidHorizontalScrollViewGallery.png\42 /\76\n', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { var b\75window,f\75\42chrome\42,g\75\42jstiming\42,k\75\42tick\42;(function(){function d(a){this.t\75{};this.tick\75function(a,d,c){var e\75void 0!\75c?c:(new Date).getTime();this.t[a]\75[e,d];if(void 0\75\75c)try{b.console.timeStamp(\42CSI/\42+a)}catch(h){}};this[k](\42start\42,null,a)}var a;b.performance\46\46(a\75b.performance.timing);var n\75a?new d(a.responseStart):new d;b.jstiming\75{Timer:d,load:n};if(a){var c\75a.navigationStart,h\75a.responseStart;0\74c\46\46h\76\75c\46\46(b[g].srt\75h-c)}if(a){var e\75b[g].load;0\74c\46\46h\76\75c\46\46(e[k](\42_wtsrt\42,void 0,c),e[k](\42wtsrt_\42,\42_wtsrt\42,h),e[k](\42tbsd_\42,\42wtsrt_\42))}try{a\75null,\nb[f]\46\46b[f].csi\46\46(a\75Math.floor(b[f].csi().pageT),e\46\0460\74c\46\46(e[k](\42_tbnd\42,void 0,b[f].csi().startE),e[k](\42tbnd_\42,\42_tbnd\42,c))),null\75\75a\46\46b.gtbExternal\46\46(a\75b.gtbExternal.pageT()),null\75\75a\46\46b.external\46\46(a\75b.external.pageT,e\46\0460\74c\46\46(e[k](\42_tbnd\42,void 0,b.external.startE),e[k](\42tbnd_\42,\42_tbnd\42,c))),a\46\46(b[g].pt\75a)}catch(p){}})();b.tickAboveFold\75function(d){var a\0750;if(d.offsetParent){do a+\75d.offsetTop;while(d\75d.offsetParent)}d\75a;750\76\75d\46\46b[g].load[k](\42aft\42)};var l\75!1;function m(){l||(l\75!0,b[g].load[k](\42firstScrollTime\42))}b.addEventListener?b.addEventListener(\42scroll\42,m,!1):b.attachEvent(\42onscroll\42,m);\n })();\74/script\076', 'mobileHeadScript': '', 'adsenseClientId': 'ca-pub-5790603037343360', 'ieCssRetrofitLinks': '\74!--[if IE]\76\74script type\75\42text/javascript\42 src\75\42https://www.blogger.com/static/v1/jsbin/850967532-ieretrofit.js\42\76\74/script\76\n\74![endif]--\076', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/d6f37bb30c327165', 'plusOneApiSrc': 'https://apis.google.com/js/plusone.js', 'testHtml5CssSrc': 'https://www.blogger.com/static/v1/widgets/2412321170-css_bundle_html5.css', 'sf': 'n', 'tf': ''}}, {'name': 'skin', 'data': {'vars': {'tabs_border_size': '0', 'tabs_shadow_spread': '0', 'link_visited_color': '#996e22', 'post_title_font': 'normal normal 30px Arial, Tahoma, Helvetica, FreeSans, sans-serif', 'tabs_separator_color': '#c0a154', 'tabs_text_color': '#cc3300', 'post_shadow_spread': '0', 'body_background_overlay_height': '121px', 'main_cap_height': '0', 'widget_title_font': 'normal normal 20px Arial, Tahoma, Helvetica, FreeSans, sans-serif', 'tabs_background_outer': 'none', 'keycolor': '#a9c054', 'main_background': 'transparent none no-repeat scroll top left', 'header_font': 'normal normal 36px Impact, sans-serif', 'post_border_style': 'dotted', 'footer_link_visited_color': '#dda932', 'post_background_url': 'url(//www.blogblog.com/1kt/watermark/post_background_birds.png)', 'footer_link_hover_color': '#ffdd77', 'mobile_background_overlay': 'transparent none repeat scroll top left', 'tabs_background_color': 'transparent', 'link_hover_color': '#ffb200', 'footer_link_color': '#ffcc55', 'description_text_color': '#eeeeee', 'body_text_color': '#333333', 'post_border_color': '#000000', 'footer_text_color': '#c3cc99', 'post_background_color': '#ffffff', 'endSide': 'right', 'post_footer_text_color': '#999955', 'tabs_background_inner': 'none', 'tabs_font': 'normal normal 20px Georgia, Utopia, \47Palatino Linotype\47, Palatino, serif', 'startSide': 'left', 'body_font': 'normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif', 'main_cap_overlay': 'none', 'date_text_color': '#999955', 'widget_title_text_color': '#c0a154', 'link_color': '#cc9900', 'footer_widget_title_text_color': '#e5eebb', 'post_border_size': '1px', 'main_cap_image': 'none', 'footer_background_color': '#331900', 'header_text_color': '#ffffff', 'date_font': 'normal normal 16px Arial, Tahoma, Helvetica, FreeSans, sans-serif', 'main_padding_top': '30px', 'tabs_selected_text_color': '#000000', 'body_background_color': '#a9c054', 'widget_alternate_text_color': '#ffffff'}, 'override': ''}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '/?view\75classic'}, 'flipcard': {'name': 'flipcard', 'url': '/?view\75flipcard'}, 'magazine': {'name': 'magazine', 'url': '/?view\75magazine'}, 'mosaic': {'name': 'mosaic', 'url': '/?view\75mosaic'}, 'sidebar': {'name': 'sidebar', 'url': '/?view\75sidebar'}, 'snapshot': {'name': 'snapshot', 'url': '/?view\75snapshot'}, 'timeslide': {'name': 'timeslide', 'url': '/?view\75timeslide'}}}]);
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML12', 'sidebar-right-3', null, document.getElementById('HTML12'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', null, document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AttributionView', new _WidgetInfo('Attribution1', 'footer-3', null, document.getElementById('Attribution1'), {'attribution': 'Watermark template. Powered by \74a href\75\47http://www.blogger.com\47 target\75\47_blank\47\76Blogger\74/a\76.'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML4', 'footer-3', null, document.getElementById('HTML4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'showBacklinks': true, 'postId': '6839374384909706643', 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/1890062674-lbx.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/4138445517-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'main', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML3', 'main', null, document.getElementById('HTML3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense3', 'sidebar-right-1', null, document.getElementById('AdSense3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PlusFollowersView', new _WidgetInfo('PlusFollowers1', 'sidebar-right-1', null, document.getElementById('PlusFollowers1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense2', 'sidebar-right-1', null, document.getElementById('AdSense2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PopularPostsView', new _WidgetInfo('PopularPosts1', 'sidebar-right-1', null, document.getElementById('PopularPosts1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense1', 'sidebar-right-1', null, document.getElementById('AdSense1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML6', 'sidebar-right-1', null, document.getElementById('HTML6'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar-right-1', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML5', 'sidebar-right-2-2', null, document.getElementById('HTML5'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML8', 'sidebar-right-2-2', null, document.getElementById('HTML8'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML16', 'sidebar-right-2-2', null, document.getElementById('HTML16'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML9', 'sidebar-right-2-2', null, document.getElementById('HTML9'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML11', 'sidebar-right-2-1', null, document.getElementById('HTML11'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML7', 'sidebar-right-2-1', null, document.getElementById('HTML7'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebar-right-2-1', null, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML17', 'sidebar-right-2-1', null, document.getElementById('HTML17'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar', null, document.getElementById('Navbar1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label1', 'footer-1', null, document.getElementById('Label1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PageListView', new _WidgetInfo('PageList1', 'null', null, document.getElementById('PageList1'), {'title': 'Pages', 'links': [{'href': 'http://android-er.blogspot.com/', 'title': 'Home', 'isCurrentPage': false}], 'mobile': false}, 'displayModeFull'));
+</script>
+
+<iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" style="display: none;"></iframe><iframe name="oauth2relay735118494" id="oauth2relay735118494" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/postmessageRelay.html" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe><link type="text/css" rel="stylesheet" href="./Android-er  Implement Gallery-like HorizontalScrollView_files/4138445517-lightbox_bundle.css"><script type="text/javascript" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/1890062674-lbx.js"></script></body><iframe frameborder="0" marginheight="0" marginwidth="0" scrolling="no" width="2" height="2" src="./Android-er  Implement Gallery-like HorizontalScrollView_files/log.html" style="display: none;"></iframe><script src="./Android-er  Implement Gallery-like HorizontalScrollView_files/saved_resource"></script></html>
